@@ -18,7 +18,7 @@ export default function consoleReducer (
 
     switch (action.type) {
         case ConsoleActions.PushMessage:
-            nextState.messages.push(action.payload);
+            nextState.messages.unshift(action.payload);
             return nextState;
 
         default:

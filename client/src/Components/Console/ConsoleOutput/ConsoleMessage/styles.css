@@ -1,0 +1,21 @@
+.consoleMessage {
+    color: greenyellow;
+    font-size: 20px;
+    letter-spacing: 0.1em;
+    padding: 7px 0;
+    height: 21px;
+
+    animation-duration: 0.3s;
+    animation-name: fadein;
+}
+
+@keyframes fadein {
+    from {
+        color: #181818;
+        height: 0;
+    }
+    to {
+        color: greenyellow;
+        height: 21px;
+    }
+}

@@ -1,0 +1,24 @@
+.consoleOutputContainer {
+    flex-grow: 1;
+    overflow: hidden;
+    position: relative;
+}
+
+.consoleOutputMessagesWrapper {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.gradientOverlay {
+    background-image: linear-gradient(rgba(24,24,24, 1), rgba(24,24,24, 1) 7%, rgba(24,24,24, 0));
+    height: 400px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+}

@@ -1,0 +1,22 @@
+.consoleInput {
+    background-color: #181818;
+    color: greenyellow;
+    font-family: 'Inconsolata', monospace;
+    letter-spacing: 0.1em;
+    height: 50px;
+    font-size: 24px;
+    padding: 10px;
+    appearance: none;
+    border: none;
+    border-top: 2px solid #444;
+    border-bottom: 2px solid #242424;
+    transition: border 0.15s ease;
+}
+
+.consoleInput:focus {
+    appearance: none;
+    outline: none;
+    border-top: 2px solid greenyellow;
+    border-bottom: 2px solid greenyellow;
+    caret-color: greenyellow;
+}
