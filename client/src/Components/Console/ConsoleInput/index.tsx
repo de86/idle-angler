@@ -2,31 +2,27 @@ import * as React from 'react';
 import {useState} from 'react';
 import {useDispatch} from 'react-redux';
 
+import {parseCommand} from '../../../lib/commands';
+
 import {consoleInput} from './styles.css';
 
-import {pushMessage} from '../../../store/actions/console';
+import {getPushMessageAction} from '../../../store/actions/console';
 
 
 
 const KEY_ENTER = 'Enter';
 
+
+
 const ConsoleInput: React.FC = () => {
 
-    const [inputValue, setInputValue] = useState('');
     const dispatch = useDispatch();
 
-    const onClickSubmit = (): void => {
-        dispatch(pushMessage(inputValue));
-        setInputValue('');
-    };
-
-    const onChangeUpdateInputValue = (e): void => {
-        setInputValue(e.target.value);
-    };
-
-    const onKeyDownCheckSubmit = (e): void => {
+    const onKeyDownParseCommand = (e): void => {
         if (e.key === KEY_ENTER) {
-            onClickSubmit();
+            dispatch(getPushMessageAction(e.target.value));
+            parseCommand(e.target.value);
+            e.target.value = '';
         }
     };
 
@@ -34,9 +30,7 @@ const ConsoleInput: React.FC = () => {
         <input
             className={consoleInput}
             type="text"
-            onChange={onChangeUpdateInputValue}
-            onKeyDown={onKeyDownCheckSubmit}
-            value={inputValue}
+            onKeyDown={onKeyDownParseCommand}
         />
     );
 };

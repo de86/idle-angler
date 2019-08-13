@@ -4,18 +4,7 @@ export interface IConsoleOutputStateProps {
     messages: string[];
 }
 
-const MAX_MESSAGES_TO_DISPLAY = 30;
-
-const selectLastMessages = (state: IAppState) => {
-    const selected = [...state.console.messages]
-        .slice(0, MAX_MESSAGES_TO_DISPLAY)
-        .reverse();
-
-    console.log([...state.console.messages]);
-    console.log(selected);
-
-    return selected;
-}
+const selectLastMessages = (state: IAppState) => [...state.console.messages].reverse();
 
 export default function consoleOutputSelector (state: IAppState): IConsoleOutputStateProps {
     return {
