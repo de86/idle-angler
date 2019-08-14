@@ -1,31 +1,37 @@
-export interface IDispatchAction {
-    type: ConsoleActions;
-    payload: unknown;
+import {createAction} from '../../helpers/actions';
+
+export interface IConsoleAction<T> {
+    type: ConsoleActionTypes;
+    payload: T;
 }
 
-export enum ConsoleActions {
+export enum ConsoleActionTypes {
     PushMessage = 'PUSH_MESSAGE',
+    PushMultipleMessages = 'PUSH_MULTI_MESSAGE',
     PushCommand = 'PUSH_COMMAND',
     ClearConsole = 'CLEAR_CONSOLE',
 }
 
-export function getPushMessageAction (message: string): IDispatchAction {
-    return {
-        type: ConsoleActions.PushMessage,
-        payload: message,
-    };
-}
 
-export function getPushCommandAction (command: string): IDispatchAction {
-    return {
-        type: ConsoleActions.PushCommand,
-        payload: command,
-    };
-}
+const createConsoleAction = <T>(type: ConsoleActionTypes, payload: T) =>
+    createAction<ConsoleActionTypes, T>(type, payload);
 
-export function getClearConsoleAction (): IDispatchAction {
-    return {
-        type: ConsoleActions.ClearConsole,
-        payload: null,
-    };
-}
+    
+export const pushMessageAction = (message: string) =>
+    createConsoleAction<string>(ConsoleActionTypes.PushMessage, message);
+
+export const PushMultipleMessagesAction = (messages: string[]) =>
+    createConsoleAction<string[]>(ConsoleActionTypes.PushMultipleMessages, messages);
+
+export const pushCommandAction = (command: string) =>
+    createConsoleAction<string>(ConsoleActionTypes.PushCommand, command);
+
+export const clearConsoleAction = () =>
+    createConsoleAction<null>(ConsoleActionTypes.ClearConsole, null);
+
+export default {
+    pushMessage: pushMessageAction,
+    pushMultipleMessages: PushMultipleMessagesAction,
+    pushCommand: pushCommandAction,
+    clearConsole: clearConsoleAction,
+};

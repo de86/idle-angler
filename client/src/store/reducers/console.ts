@@ -1,4 +1,4 @@
-import {ConsoleActions, IDispatchAction} from '../actions/console';
+import {ConsoleActionTypes, IConsoleAction} from '../actions/console';
 
 export interface IConsoleState {
     messages: string[];
@@ -14,21 +14,26 @@ export function createInitialConsoleState (): IConsoleState {
 
 export default function consoleReducer (
     state: IConsoleState = createInitialConsoleState(),
-    action: IDispatchAction,
+    action: IConsoleAction, // Union of action creator return types
 ): IConsoleState {
     const nextState = {...state};
+    const {PushMessage, PushMultipleMessages, PushCommand, ClearConsole} = ConsoleActionTypes;
 
     switch (action.type) {
-        case ConsoleActions.PushMessage:
+        case PushMessage:
             nextState.messages.unshift(action.payload);
             return nextState;
 
-        case ConsoleActions.PushCommand:
+        case PushCommand:
             nextState.commands.unshift(action.payload);
             return nextState;
 
-        case ConsoleActions.ClearConsole:
+        case ClearConsole:
             nextState.messages = [];
+            return nextState;
+
+        case PushMultipleMessages:
+            action.payload.forEach((message: string) => nextState.messages.unshift(message));
             return nextState;
 
         default:

@@ -1,17 +1,23 @@
 import store from '../store';
 
-import {getClearConsoleAction, getPushCommandAction} from '../store/actions/console';
+import consoleActions from '../store/actions/console';
+
+import consoleTranslations from '../data/translations.json';
+
 
 const COMMAND_CLEAR = 'clear';
+const COMMAND_HELP = 'help';
 
-const consoleCommandsDictionary: Record<string, (command: string, params: string[]) => void> = {
+const commandList = [
+    COMMAND_CLEAR,
+    COMMAND_HELP,
+];
+
+const commandsMap: Record<string, (command: string, params: string[]) => void> = {
     [COMMAND_CLEAR]: clearConsole,
+    [COMMAND_HELP]: displayHelp,
 };
 
-export function clearConsole (command: string): void {
-    store.dispatch(getClearConsoleAction());
-    store.dispatch(getPushCommandAction(command));
-}
 
 export function parseCommand (input: string): void {
     const inputTokens = input.split(' ');
@@ -19,9 +25,27 @@ export function parseCommand (input: string): void {
     const command = inputTokens[0].toLowerCase();
     const params = inputTokens.slice(1);
 
-    if (consoleCommandsDictionary[command]) {
-        consoleCommandsDictionary[command](command, params);
+    if (commandsMap[command]) {
+        commandsMap[command](command, params);
     } else {
         console.log(`Command '${command}' not found`);
     }
+}
+
+
+export function clearConsole (): void {
+    store.dispatch(consoleActions.clearConsole());
+    store.dispatch(consoleActions.pushCommand(COMMAND_CLEAR));
+}
+
+
+export function displayHelp (): void {
+    store.dispatch(consoleActions.pushCommand(COMMAND_HELP));
+
+    const helpText = [
+        ...commandList,
+        ...consoleTranslations.help,
+    ];
+
+    store.dispatch(consoleActions.pushMultipleMessages(helpText));
 }

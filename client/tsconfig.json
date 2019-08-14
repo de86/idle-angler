@@ -9,9 +9,11 @@
         "sourceMap": true,
         "target": "es5",
         "jsx": "react",
+        "resolveJsonModule": true,
+        "esModuleInterop": true,
         "lib": [
             "dom",
-            "es7"
+            "es7",
         ],
         "plugins": [
             {
